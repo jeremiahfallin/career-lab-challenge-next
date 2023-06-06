@@ -10,3 +10,11 @@
 .App > h1 {
 	text-align: center;
 }
+
+.link {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	text-decoration: underline;
+	text-align: left;
+}

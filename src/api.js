@@ -9,6 +9,8 @@
  * An individual piece of artwork found at the `/artworks/search/` endpoint.
  * @typedef {Object} Artwork
  * @property {string} artist_title
+ * @property {number} _score
+ * @property {string | null} artist_title
  * @property {string} date_display
  * @property {string} image_id
  * @property {{alt_text: string, height: number, width: number}} thumbnail
@@ -17,7 +19,17 @@
  *
  *
  * @typedef {Object} ArtworkSearchResult
+ */
+
+/**
+ * The response from the `/artworks/search/` endpoint. Includes an array of
+ * artworks, as well as some `config`, `info`, and `pagination` metadata.
+ * @typedef {Object} AICSearchResponse
+ * @property {Object} config
  * @property {Array<Artwork>} data
+ * @property {Object} info
+ * @property {Object} pagination
+ * @property {null} preference
  */
 
 /**
@@ -25,6 +37,7 @@
  * and get a Promise containing the JSON-encoded response.
  * @param {string} query
  * @returns {Promise<ArtworkSearchResult>}
+ * @returns {Promise<AICSearchResponse>}
  */
 export function searchArtworks(query) {
 	/**
@@ -34,6 +47,7 @@ export function searchArtworks(query) {
 	 * as described in README.md.
 	 */
 	const requestUrl = `./ARTWORKS_SEARCH_RESULT.json`;
+	const prodRequestUrl = `https://api.artic.edu/api/v1/artworks/search?q=${query}&query[term][is_public_domain]=true&fields=artist_title,date_display,image_id,thumbnail.alt_text,thumbnail.width,thumbnail.height,title`;
 
 	/**
 	 * We know the API serves JSON data, but
@@ -41,7 +55,7 @@ export function searchArtworks(query) {
 	 * */
 	const headers = { Accept: 'application/json' };
 
-	return fetch(requestUrl, { headers }).then((res) => {
+	return fetch(prodRequestUrl, { headers }).then((res) => {
 		if (res.ok) {
 			return res.json();
 		}

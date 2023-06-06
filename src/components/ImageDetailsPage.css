@@ -1,0 +1,17 @@
+.ImageDetails {
+	display: flex;
+	flex-direction: column;
+	& .title {
+		display: flex;
+		direction: row;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		& .title-text {
+			padding: 0.67em 0;
+			& h1 {
+				display: inline;
+			}
+		}
+	}
+}
